@@ -44,6 +44,15 @@ STREAM_DATA = 2
 STREAM_STOP = 3
 
 
+from mynlp import NLP 
+
+nlp = NLP()
+
+def _handle_utterance(utterance):
+    intent = nlp.parse(utterance)
+     
+
+
 class AudioStreamHandler(object):
     def __init__(self, queue):
         self.queue = queue
