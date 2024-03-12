@@ -37,7 +37,11 @@ Mycroft is a hackable open source voice assistant.
 
 First, get the code on your system!  The simplest method is via git ([git installation instructions](https://gist.github.com/derhuerst/1b15ff4652a867391f03)):
 - `cd ~/`
-- `git clone https://github.com/MycroftAI/mycroft-core.git`
+- `git clone
+ this repo
+https://github.com/stevechretien111/mycroft-core.git
+  or the original Mycroft repos
+- https://github.com/MycroftAI/mycroft-core.git`
 - `cd mycroft-core`
 - `bash dev_setup.sh`
 
@@ -59,7 +63,7 @@ The "debug" command will start the background services (microphone listener, ski
 The background services can be stopped as a group with:
 - `./stop-mycroft.sh`
 
-## Using Mycroft
+## Using Mycroft, note that Mycroft.ai is no more.
 
 ### *Home* Device and Account Manager
 Mycroft AI, Inc. maintains a device and account management system known as Mycroft Home. Developers may sign up at: https://home.mycroft.ai
@@ -146,15 +150,12 @@ $ export no_proxy="localhost,127.0.0.1,localaddress,.localdomain.com,0.0.0.0,::1
 
 This is an open source project. We would love your help. We have prepared a [contributing](.github/CONTRIBUTING.md) guide to help you get started.
 
-If this is your first PR, or you're not sure where to get started,
-say hi in [Mycroft Chat](https://chat.mycroft.ai/) and a team member would be happy to mentor you.
-Join the [Mycroft Forum](https://community.mycroft.ai/) for questions and answers.
+
 
 ## Links
 * [Creating a Skill](https://mycroft-ai.gitbook.io/docs/skill-development/your-first-skill)
 * [Documentation](https://docs.mycroft.ai)
 * [Skill Writer API Docs](https://mycroft-core.readthedocs.io/en/master/)
 * [Release Notes](https://github.com/MycroftAI/mycroft-core/releases)
-* [Mycroft Chat](https://chat.mycroft.ai)
-* [Mycroft Forum](https://community.mycroft.ai)
-* [Mycroft Blog](https://mycroft.ai/blog)
+* [Community open conversational ai](https://community.openconversational.ai/)
+
