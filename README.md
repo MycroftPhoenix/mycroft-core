@@ -6,7 +6,7 @@
 [![Team](https://img.shields.io/badge/Team-Mycroft_Core-violetblue.svg)](https://github.com/MycroftAI/contributors/blob/master/team/Mycroft%20Core.md) 
 ![Status](https://img.shields.io/badge/-Production_ready-green.svg)
 
-- [What about this projet](#what-about-this-project)
+- [What about this project](#what-about-this-project)
 - [A propos de ce projet](#a-propos-de-ce-projet)
 
 ![Unit Tests](https://github.com/mycroftai/mycroft-core/workflows/Unit%20Tests/badge.svg)
@@ -37,7 +37,7 @@ Mycroft is a hackable open source voice assistant.
 - [Links](#links)
 
 
-## What about this projet
+## What about this project
 
 "I am currently working on Mycroft to address the fact that Mycroft's online services are no longer available. Right now, I'm trying to make the scripts believe that all systems are operational by modifying some scripts. The primary goal is to enable Mycroft users to use it again, especially for those who don't want to use alternative projects. The second objective is to port Mycroft to Windows, since Mycroft is primarily in Python, it should be feasible to extend its usability to other platforms, given Python's widespread usage. I'm considering using Miniforge instead of venv because Conda is more stable, in my opinion.The third step would be translating the skills into as many languages as possible and possibly creating new skills that could allow for more extensive use.I believe that porting Mycroft to Windows will significantly increase the number of users, as most people have a computer running Windows. Translating the skills into as many languages as possible is also important because even though English is spoken almost everywhere, not everyone wants to use software that isn't in their native language, especially when it's an electronic presence always ready to respond when called upon, it's more natural when it's in our mother tongue.Creating a graphical interface for skill installation and for system configuration in general would also be important, as not everyone is comfortable with command lines or editing files. A web interface would be perfect.I am not a programmer myself. I rely on AIs like Cody from Sourcegraph and ChatGPT to generate code, explain how it works, and help me find and correct error messages.If anyone is interested in this project, everyone is welcome, whether they are coders or not. Mycroft is an open-source and community-driven project, so if the community wants to participate, with everyone's knowledge and talents, we can create something useful, powerful, and really cool!
 
