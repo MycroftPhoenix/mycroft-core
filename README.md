@@ -6,6 +6,9 @@
 [![Team](https://img.shields.io/badge/Team-Mycroft_Core-violetblue.svg)](https://github.com/MycroftAI/contributors/blob/master/team/Mycroft%20Core.md) 
 ![Status](https://img.shields.io/badge/-Production_ready-green.svg)
 
+- [What about this projet](#what-about-this-project)
+- [A propos de ce projet](#a-propos-de-ce-projet)
+
 ![Unit Tests](https://github.com/mycroftai/mycroft-core/workflows/Unit%20Tests/badge.svg)
 [![codecov](https://codecov.io/gh/MycroftAI/mycroft-core/branch/dev/graph/badge.svg?token=zQzRlkXxAr)](https://codecov.io/gh/MycroftAI/mycroft-core)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
@@ -32,6 +35,17 @@ Mycroft is a hackable open source voice assistant.
     + [Using Mycroft behind an authenticated proxy](#using-mycroft-behind-an-authenticated-proxy)
 - [Getting Involved](#getting-involved)
 - [Links](#links)
+
+
+## What about this projet
+
+"I am currently working on Mycroft to address the fact that Mycroft's online services are no longer available. Right now, I'm trying to make the scripts believe that all systems are operational by modifying some scripts. The primary goal is to enable Mycroft users to use it again, especially for those who don't want to use alternative projects. The second objective is to port Mycroft to Windows, since Mycroft is primarily in Python, it should be feasible to extend its usability to other platforms, given Python's widespread usage. I'm considering using Miniforge instead of venv because Conda is more stable, in my opinion.The third step would be translating the skills into as many languages as possible and possibly creating new skills that could allow for more extensive use.I believe that porting Mycroft to Windows will significantly increase the number of users, as most people have a computer running Windows. Translating the skills into as many languages as possible is also important because even though English is spoken almost everywhere, not everyone wants to use software that isn't in their native language, especially when it's an electronic presence always ready to respond when called upon, it's more natural when it's in our mother tongue.Creating a graphical interface for skill installation and for system configuration in general would also be important, as not everyone is comfortable with command lines or editing files. A web interface would be perfect.I am not a programmer myself. I rely on AIs like Cody from Sourcegraph and ChatGPT to generate code, explain how it works, and help me find and correct error messages.If anyone is interested in this project, everyone is welcome, whether they are coders or not. Mycroft is an open-source and community-driven project, so if the community wants to participate, with everyone's knowledge and talents, we can create something useful, powerful, and really cool!
+
+
+## A propos de ce projet
+
+Actuellement, je travaille sur Mycroft pour pallier le manque des services en ligne qui n'existent plus. Mon objectif principal est de permettre aux utilisateurs de Mycroft de continuer à l'utiliser, en particulier pour ceux qui préfèrent ne pas se tourner vers des alternatives. De plus, je vise à porter Mycroft sur Windows, sachant que la majorité des utilisateurs disposent d'un ordinateur sous ce système d'exploitation, et étant donné que Mycroft est principalement développé en Python, cela devrait être réalisable et étendre considérablement son accessibilité.Ensuite, je souhaite traduire les compétences de Mycroft dans un maximum de langues possible et idéalement créer de nouvelles compétences pour étendre ses fonctionnalités. Je crois fermement que rendre Mycroft disponible sur Windows augmentera significativement sa base d'utilisateurs. De même, la traduction des compétences dans différentes langues est cruciale, car bien que l'anglais soit largement parlé, certains utilisateurs préfèrent interagir avec des logiciels dans leur langue maternelle pour une expérience plus naturelle et immersive.Je pense également qu'il est important de développer une interface graphique conviviale pour l'installation de compétences et la configuration générale du système. Tout le monde n'est pas à l'aise avec les lignes de commande ou la modification de fichiers de configuration, et une interface web serait un ajout parfait pour rendre Mycroft encore plus accessible.Bien que je n'aie aucune formation en programmation, je m'appuie sur des outils comme Cody de Sourcegraph et ChatGPT pour générer du code et m'aider à comprendre son fonctionnement. Si quelqu'un est intéressé par ce projet, qu'il soit programmeur ou non, toute contribution est la bienvenue. Mycroft étant un projet open source et communautaire, je suis convaincu que nous pouvons créer quelque chose d'utile, performant et vraiment génial grâce aux connaissances et talents de chacun.
+
 
 ## Getting Started
 
@@ -158,4 +172,3 @@ This is an open source project. We would love your help. We have prepared a [con
 * [Skill Writer API Docs](https://mycroft-core.readthedocs.io/en/master/)
 * [Release Notes](https://github.com/MycroftAI/mycroft-core/releases)
 * [Community open conversational ai](https://community.openconversational.ai/)
-
