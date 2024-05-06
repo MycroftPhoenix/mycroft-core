@@ -8,7 +8,8 @@
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
 [![Join chat](https://img.shields.io/badge/Mattermost-join_chat-brightgreen.svg)](https://chat.mycroft.ai)
 
-# Mycroft
+# Mycroft Phoenix
+The goal is to bring Mycroft to other platforms like Windows and Mac. 
 
 Mycroft is a hackable open source voice assistant.
 
