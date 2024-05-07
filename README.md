@@ -36,6 +36,7 @@ Mycroft is a hackable open source voice assistant.
 First, get the code on your system!  The simplest method is via git ([git installation instructions](https://gist.github.com/derhuerst/1b15ff4652a867391f03)):
 - `cd ~/`
 - ([git clone -b phoenix_dev https://github.com/MycroftPhoenix/mycroft-core.git](git clone -b phoenix_dev https://github.com/MycroftPhoenix/mycroft-core.git)):
+- ([lone -b phoenix_dev https://github.com/MycroftPhoenix/mycroft-core.git](https://gist.github.com/derhuerst/1b15ff4652a867391f03))
 - `cd mycroft-core`
 - `bash dev_setup.sh`
 
