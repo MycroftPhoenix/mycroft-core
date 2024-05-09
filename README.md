@@ -9,7 +9,7 @@
 [![Join chat](https://img.shields.io/badge/Mattermost-join_chat-brightgreen.svg)](https://chat.mycroft.ai)
 
 # Mycroft Phoenix
-The goal is to bring Mycroft to other platforms like Windows and Mac. 
+
 
 "This version requires Python 3.8. We will endeavor to make improvements to support newer versions of Python once the project has reached a more advanced stage of development."
 
