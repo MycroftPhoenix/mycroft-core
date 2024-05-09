@@ -13,6 +13,11 @@ The goal is to bring Mycroft to other platforms like Windows and Mac.
 
 "This version requires Python 3.8. We will endeavor to make improvements to support newer versions of Python once the project has reached a more advanced stage of development."
 
+Mycroft Phoenix is currently in its early stages of development, with the ultimate goal of porting Mycroft to Windows, Mac, and Android using Termux.
+
+Whether you're a seasoned developer or just getting started, any help or contribution is greatly appreciated. As someone who utilizes AI to generate scripts and make corrections, I'm always open to collaboration and feedback. Contributions are not limited to Mycroft-Phoenix but also extend to any other part of the project. Together, we can make Mycroft Phoenix even better.
+
+If you're interested in joining the project or have any questions, feel free to reach out to me at stevechretien111@protonmail.com. Your input and support are invaluable as we continue to improve Mycoft-Phoenix. 
 Mycroft is a hackable open source voice assistant.
 
 ## Table of Contents
