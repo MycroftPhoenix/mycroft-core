@@ -1,0 +1,34 @@
+import win32com.client
+from mycroft.tts import TTS
+
+class NarratorTTS(TTS):
+
+  def __init__(self, lang, config):
+    super().__init__(lang, config)
+    
+    self.speaker = win32com.client.Dispatch("SAPI.SpVoice")
+    
+    # Récupérer paramètres voix et langue
+    voices = self.speaker.GetVoices()  
+    self.speaker.Voice = voices.Item(config.get('voice_id', 0)) 
+    self.lang = config.get('lang', 'en-US')
+
+  def execute(self, sentence):
+    self.speaker.Speak(sentence)
+    
+  def validate_lang(self, lang):
+    # Vérifier que langue supportée    
+    return lang in ['en-US', 'fr-FR']
+    
+  def get_voices(self):
+    voices = []
+    for voice in self.speaker.GetVoices():
+      voices.append({
+        'name': voice.GetDescription(),
+        'id': voice.Id
+      })
+    return voices
+
+# Enregistrement du moteur  
+from mycroft.tts import TTSFactory
+TTSFactory.create('narrator', NarratorTTS)
