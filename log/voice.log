@@ -1,0 +1,72 @@
+2024-05-23 19:03:08.631 | WARNING  | 663948 | mycroft.configuration.config:_log_old_location_deprecation:211 | 
+ ===============================================
+ ==             DEPRECATION WARNING           ==
+ ===============================================
+ You still have a config file at /home/steve/.mycroft/config/user/mycroft.conf
+ Note that this location is deprecated and will not be used in the future
+ Please move it to /home/steve/.mycroft/config/user
+Interrupted by user
+2024-05-23 19:03:58,358 | WARNING  | 663948 | mycroft.configuration.config:_log_old_location_deprecation:211 | 
+ ===============================================
+ ==             DEPRECATION WARNING           ==
+ ===============================================
+ You still have a config file at /home/steve/.mycroft/config/user/mycroft.conf
+ Note that this location is deprecated and will not be used in the future
+ Please move it to /home/steve/.mycroft/config/user
+2024-05-23 19:03:59,172 | WARNING  | 663948 | mycroft.configuration.config:_log_old_location_deprecation:211 | 
+ ===============================================
+ ==             DEPRECATION WARNING           ==
+ ===============================================
+ You still have a config file at /home/steve/.mycroft/config/user/mycroft.conf
+ Note that this location is deprecated and will not be used in the future
+ Please move it to /home/steve/.mycroft/config/user
+2024-05-23 19:04:00,469 | INFO     | 663948 | mycroft.messagebus.load_config:load_message_bus_config:33 | Loading message bus configs
+2024-05-23 19:04:00,533 | INFO     | 663948 | mycroft_bus_client.client.client | Connected
+2024-05-23 19:04:00,546 | INFO     | 663948 | mycroft.util.process_utils:start_message_bus_client:155 | Connected to messagebus
+2024-05-23 19:04:00,577 | INFO     | 663948 | mycroft.client.speech.listener:create_wake_word_recognizer:328 | Creating wake word engine
+2024-05-23 19:04:00,600 | INFO     | 663948 | mycroft.client.speech.listener:create_wake_word_recognizer:351 | Using hotword entry for hey mycroft
+2024-05-23 19:04:00,624 | INFO     | 663948 | mycroft.client.speech.hotword_factory:load_module:500 | Loading "hey mycroft" wake word via precise
+2024-05-23 19:04:10,186 | INFO     | 663948 | mycroft.client.speech.listener:create_wakeup_recognizer:365 | creating stand up word engine
+2024-05-23 19:04:10,197 | INFO     | 663948 | mycroft.client.speech.hotword_factory:load_module:500 | Loading "wake up" wake word via pocketsphinx
+2024-05-23 19:04:11,478 | INFO     | 663948 | __main__:on_ready:179 | Speech client is ready.
+Exception ignored from cffi callback <function _StreamBase.__init__.<locals>.callback_ptr at 0x7f74452e28b0>:
+Traceback (most recent call last):
+  File "/home/steve/miniforge3/envs/padatious/lib/python3.8/site-packages/sounddevice.py", line 846, in callback_ptr
+    return _wrap_callback(callback, data, frames, time, status)
+  File "/home/steve/miniforge3/envs/padatious/lib/python3.8/site-packages/sounddevice.py", line 2687, in _wrap_callback
+    callback(*args)
+  File "/home/steve/mycroft-core/mycroft/client/speech/mic.py", line 104, in callback
+    self.wake_word_recognizer.update(indata_float)
+  File "/home/steve/mycroft-core/mycroft/client/speech/hotword_factory.py", line 348, in update
+    self.stream.write(chunk)
+  File "/home/steve/miniforge3/envs/padatious/lib/python3.8/site-packages/precise_runner/runner.py", line 91, in write
+Exception in thread Thread-8:
+Traceback (most recent call last):
+  File "/home/steve/miniforge3/envs/padatious/lib/python3.8/threading.py", line 932, in _bootstrap_inner
+    self.run()
+  File "/home/steve/mycroft-core/mycroft/client/speech/listener.py", line 80, in run
+    self.recognizer.adjust_for_ambient_noise(source)
+  File "/home/steve/miniforge3/envs/padatious/lib/python3.8/site-packages/speech_recognition/__init__.py", line 530, in adjust_for_ambient_noise
+    self.buffer += s
+numpy.core._exceptions.UFuncTypeError: ufunc 'add' did not contain a loop with signature matching types (dtype('S1'), dtype('float32')) -> None
+    energy = audioop.rms(buffer, source.SAMPLE_WIDTH)  # energy of the audio signal
+TypeError: a bytes-like object is required, not 'tuple'
+2024-05-23 19:10:00,832 | INFO     | 663948 | __main__:handle_complete_intent_failure:103 | Failed to find intent.
+2024-05-23 19:10:21,433 | INFO     | 663948 | __main__:handle_complete_intent_failure:103 | Failed to find intent.
+2024-05-23 19:10:41,859 | INFO     | 663948 | __main__:handle_complete_intent_failure:103 | Failed to find intent.
+2024-05-23 19:10:46,151 | INFO     | 663948 | __main__:handle_complete_intent_failure:103 | Failed to find intent.
+2024-05-23 19:11:07,583 | INFO     | 663948 | __main__:handle_complete_intent_failure:103 | Failed to find intent.
+2024-05-23 19:11:13,856 | INFO     | 663948 | __main__:handle_complete_intent_failure:103 | Failed to find intent.
+2024-05-23 21:02:35,878 | INFO     | 663948 | __main__:handle_complete_intent_failure:103 | Failed to find intent.
+2024-05-23 21:02:57,194 | INFO     | 663948 | __main__:handle_complete_intent_failure:103 | Failed to find intent.
+2024-05-23 21:03:22,721 | INFO     | 663948 | __main__:handle_complete_intent_failure:103 | Failed to find intent.
+2024-05-23 21:09:08,584 | INFO     | 663948 | __main__:handle_complete_intent_failure:103 | Failed to find intent.
+2024-05-23 21:09:27,269 | INFO     | 663948 | __main__:handle_complete_intent_failure:103 | Failed to find intent.
+2024-05-23 21:09:54,619 | INFO     | 663948 | __main__:handle_complete_intent_failure:103 | Failed to find intent.
+2024-05-23 21:10:34,619 | INFO     | 663948 | __main__:handle_complete_intent_failure:103 | Failed to find intent.
+2024-05-23 21:10:58,074 | INFO     | 663948 | __main__:handle_complete_intent_failure:103 | Failed to find intent.
+2024-05-23 21:10:59,962 | INFO     | 663948 | __main__:handle_complete_intent_failure:103 | Failed to find intent.
+2024-05-23 21:18:45,621 | INFO     | 663948 | __main__:handle_complete_intent_failure:103 | Failed to find intent.
+2024-05-23 21:18:47,089 | INFO     | 663948 | __main__:handle_complete_intent_failure:103 | Failed to find intent.
+2024-05-23 21:18:58,050 | INFO     | 663948 | __main__:handle_complete_intent_failure:103 | Failed to find intent.
+2024-05-23 21:18:59,437 | INFO     | 663948 | __main__:handle_complete_intent_failure:103 | Failed to find intent.

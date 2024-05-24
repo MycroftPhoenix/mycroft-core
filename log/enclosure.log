@@ -1,0 +1,38 @@
+2024-05-23 21:18:31.068 | WARNING  | 685552 | mycroft.configuration.config:_log_old_location_deprecation:211 | 
+ ===============================================
+ ==             DEPRECATION WARNING           ==
+ ===============================================
+ You still have a config file at /home/steve/.mycroft/config/user/mycroft.conf
+ Note that this location is deprecated and will not be used in the future
+ Please move it to /home/steve/.mycroft/config/user
+2024-05-23 21:18:33,298 | WARNING  | 685552 | mycroft.configuration.config:_log_old_location_deprecation:211 | 
+ ===============================================
+ ==             DEPRECATION WARNING           ==
+ ===============================================
+ You still have a config file at /home/steve/.mycroft/config/user/mycroft.conf
+ Note that this location is deprecated and will not be used in the future
+ Please move it to /home/steve/.mycroft/config/user
+2024-05-23 21:18:33,380 | INFO     | 685552 | __main__:create_enclosure:55 | Creating generic enclosure, platform='None'
+2024-05-23 21:18:33,476 | INFO     | 685552 | mycroft.messagebus.load_config:load_message_bus_config:33 | Loading message bus configs
+2024-05-23 21:18:33,549 | INFO     | 685552 | mycroft.client.enclosure.base:create_gui_service:473 | Starting message bus for GUI...
+2024-05-23 21:18:33,651 | INFO     | 685552 | mycroft.client.enclosure.base:create_gui_service:483 | GUI Message bus started!
+2024-05-23 21:18:33,679 | INFO     | 685552 | mycroft.enclosure.display_manager:init_display_manager_bus_connection:152 | Connecting display manager to messagebus
+2024-05-23 21:18:33,710 | INFO     | 685552 | mycroft.messagebus.load_config:load_message_bus_config:33 | Loading message bus configs
+Traceback (most recent call last):
+  File "/home/steve/miniforge3/envs/multiplatforme/lib/python3.8/runpy.py", line 194, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/home/steve/miniforge3/envs/multiplatforme/lib/python3.8/runpy.py", line 87, in _run_code
+    exec(code, run_globals)
+  File "/home/steve/mycroft-core/mycroft/client/enclosure/__main__.py", line 93, in <module>
+    main()
+  File "/home/steve/mycroft-core/mycroft/client/enclosure/__main__.py", line 76, in main
+    enclosure = create_enclosure(platform)
+  File "/home/steve/mycroft-core/mycroft/client/enclosure/__main__.py", line 60, in create_enclosure
+    enclosure = EnclosureGeneric()
+  File "/home/steve/mycroft-core/mycroft/client/enclosure/generic/__init__.py", line 54, in __init__
+    if not connected():
+  File "/home/steve/mycroft-core/mycroft/util/network_utils.py", line 24, in connected
+    if _connected_dns():
+  File "/home/steve/mycroft-core/mycroft/util/network_utils.py", line 66, in _connected_dns
+    s.connect((host, port))
+TypeError: str, bytes or bytearray expected, not NoneType

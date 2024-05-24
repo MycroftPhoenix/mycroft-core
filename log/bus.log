@@ -1,0 +1,15 @@
+2024-05-23 21:18:26.467 | WARNING  | 685520 | mycroft.configuration.config:_log_old_location_deprecation:211 | 
+ ===============================================
+ ==             DEPRECATION WARNING           ==
+ ===============================================
+ You still have a config file at /home/steve/.mycroft/config/user/mycroft.conf
+ Note that this location is deprecated and will not be used in the future
+ Please move it to /home/steve/.mycroft/config/user
+Traceback (most recent call last):
+  File "/home/steve/miniforge3/envs/multiplatforme/lib/python3.8/runpy.py", line 194, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/home/steve/miniforge3/envs/multiplatforme/lib/python3.8/runpy.py", line 87, in _run_code
+    exec(code, run_globals)
+  File "/home/steve/mycroft-core/mycroft/messagebus/service/__main__.py", line 2, in <module>
+    import portalocker
+ModuleNotFoundError: No module named 'portalocker'

@@ -1,21 +1,7 @@
-# Copyright 2017 Mycroft AI Inc.
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#    http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-#
 import sys
 import signal
 import io
-import os.path
+import os
 import curses
 from mycroft.util import get_ipc_directory
 from .text_client import (
@@ -44,11 +30,14 @@ def main():
     config = Configuration.get()
     if 'log_dir' in config:
         log_dir = os.path.expanduser(config['log_dir'])
-        start_log_monitor(os.path.join(log_dir, 'skills.log'))
-        start_log_monitor(os.path.join(log_dir, 'voice.log'))
+        skills_log = os.path.join(log_dir, 'skills.log')
+        voice_log = os.path.join(log_dir, 'voice.log')
     else:
-        start_log_monitor("/var/log/mycroft/skills.log")
-        start_log_monitor("/var/log/mycroft/voice.log")
+        skills_log = os.path.join("mycroft", "log", "skills.log")
+        voice_log = os.path.join("mycroft", "log", "voice.log")
+
+    start_log_monitor(skills_log)
+    start_log_monitor(voice_log)
 
     # Monitor IPC file containing microphone level info
     start_mic_monitor(os.path.join(get_ipc_directory(), "mic_level"))

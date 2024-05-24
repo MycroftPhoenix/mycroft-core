@@ -15,7 +15,6 @@
 import sys
 import io
 from math import ceil
-import xdg.BaseDirectory
 
 from .gui_server import start_qml_gui
 
@@ -83,8 +82,8 @@ SCR_SKILLS = 2
 screen_mode = SCR_MAIN
 
 subscreen = 0     # for help pages, etc.
-REDRAW_FREQUENCY = 10    # seconds between full redraws
-last_redraw = time.time() - (REDRAW_FREQUENCY - 1)  # seed for 1s redraw
+FULL_REDRAW_FREQUENCY = 10    # seconds between full redraws
+last_full_redraw = time.time()-(FULL_REDRAW_FREQUENCY-1)  # seed for 1s redraw
 screen_lock = Lock()
 is_screen_dirty = True
 
@@ -143,7 +142,7 @@ def handleNonAscii(text):
 ##############################################################################
 # Settings
 
-filename = "mycroft_cli.conf"
+config_file = os.path.join(os.path.expanduser("~"), ".mycroft_cli.conf")
 
 
 def load_mycroft_config(bus):
@@ -172,35 +171,6 @@ def load_settings():
     global max_log_lines
     global show_meter
 
-    config_file = None
-
-    # Old location
-    path = os.path.join(os.path.expanduser("~"), ".mycroft_cli.conf")
-    if os.path.isfile(path):
-        LOG.warning(" ===============================================")
-        LOG.warning(" ==             DEPRECATION WARNING           ==")
-        LOG.warning(" ===============================================")
-        LOG.warning(" You still have a config file at " +
-                    path)
-        LOG.warning(" Note that this location is deprecated and will" +
-                    " not be used in the future")
-        LOG.warning(" Please move it to " +
-                    os.path.join(xdg.BaseDirectory.xdg_config_home, 'mycroft',
-                                 filename))
-        config_file = path
-
-    # Check XDG_CONFIG_DIR
-    if config_file is None:
-        for conf_dir in xdg.BaseDirectory.load_config_paths('mycroft'):
-            xdg_file = os.path.join(conf_dir, filename)
-            if os.path.isfile(xdg_file):
-                config_file = xdg_file
-                break
-
-    # Check /etc/mycroft
-    if config_file is None:
-        config_file = os.path.join("/etc/mycroft", filename)
-
     try:
         with io.open(config_file, 'r') as f:
             config = json.load(f)
@@ -226,10 +196,6 @@ def save_settings():
     config["show_last_key"] = show_last_key
     config["max_log_lines"] = max_log_lines
     config["show_meter"] = show_meter
-
-    config_file = os.path.join(
-        xdg.BaseDirectory.save_config_path("mycroft"), filename)
-
     with io.open(config_file, 'w') as f:
         f.write(str(json.dumps(config, ensure_ascii=False)))
 
@@ -471,7 +437,7 @@ def handle_utterance(event):
 def connect(bus):
     """ Run the mycroft messagebus referenced by bus.
 
-        Args:
+        Arguments:
             bus:    Mycroft messagebus instance
     """
     bus.run_forever()
@@ -504,19 +470,19 @@ def draw(x, y, msg, pad=None, pad_chr=None, clr=None):
         return
 
     if x + len(msg) > curses.COLS:
-        s = msg[:curses.COLS - x]
+        s = msg[:curses.COLS-x]
     else:
         s = msg
         if pad:
             ch = pad_chr or " "
             if pad is True:
                 pad = curses.COLS  # pad to edge of screen
-                s += ch * (pad - x - len(msg))
+                s += ch * (pad-x-len(msg))
             else:
                 # pad to given length (or screen width)
-                if x + pad > curses.COLS:
-                    pad = curses.COLS - x
-                s += ch * (pad - len(msg))
+                if x+pad > curses.COLS:
+                    pad = curses.COLS-x
+                s += ch * (pad-len(msg))
 
     if not clr:
         clr = CLR_LOG1
@@ -543,31 +509,7 @@ def init_screen():
     global CLR_METER_CUR
     global CLR_METER
 
-    if curses.has_colors():
-        curses.init_pair(1, curses.COLOR_WHITE, curses.COLOR_BLACK)
-        bg = curses.COLOR_BLACK
-        for i in range(1, curses.COLORS):
-            curses.init_pair(i + 1, i, bg)
-
-        # Colors (on black backgound):
-        # 1 = white         5 = dk blue
-        # 2 = dk red        6 = dk purple
-        # 3 = dk green      7 = dk cyan
-        # 4 = dk yellow     8 = lt gray
-        CLR_HEADING = curses.color_pair(1)
-        CLR_CHAT_RESP = curses.color_pair(4)
-        CLR_CHAT_QUERY = curses.color_pair(7)
-        CLR_FIND = curses.color_pair(4)
-        CLR_CMDLINE = curses.color_pair(7)
-        CLR_INPUT = curses.color_pair(7)
-        CLR_LOG1 = curses.color_pair(3)
-        CLR_LOG2 = curses.color_pair(6)
-        CLR_LOG_DEBUG = curses.color_pair(4)
-        CLR_LOG_ERROR = curses.color_pair(2)
-        CLR_LOG_CMDMESSAGE = curses.color_pair(2)
-        CLR_METER_CUR = curses.color_pair(2)
-        CLR_METER = curses.color_pair(4)
-
+    
 
 def scroll_log(up, num_lines=None):
     global log_line_offset
@@ -656,27 +598,18 @@ def _do_gui(gui_width):
     clr = curses.color_pair(2)  # dark red
     x = curses.COLS - gui_width
     y = 3
-    draw(
-        x,
-        y,
-        " " +
-        make_titlebar(
-            "= GUI",
-            gui_width -
-            1) +
-        " ",
-        clr=CLR_HEADING)
-    cnt = len(gui_text) + 1
-    if cnt > curses.LINES - 15:
-        cnt = curses.LINES - 15
+    draw(x, y, " "+make_titlebar("= GUI", gui_width-1)+" ", clr=CLR_HEADING)
+    cnt = len(gui_text)+1
+    if cnt > curses.LINES-15:
+        cnt = curses.LINES-15
     for i in range(0, cnt):
-        draw(x, y + 1 + i, " !", clr=CLR_HEADING)
+        draw(x, y+1+i, " !", clr=CLR_HEADING)
         if i < len(gui_text):
-            draw(x + 2, y + 1 + i, gui_text[i], pad=gui_width - 3)
+            draw(x+2, y+1+i, gui_text[i], pad=gui_width-3)
         else:
-            draw(x + 2, y + 1 + i, "*" * (gui_width - 3))
-        draw(x + (gui_width - 1), y + 1 + i, "!", clr=CLR_HEADING)
-    draw(x, y + cnt, " " + "-" * (gui_width - 2) + " ", clr=CLR_HEADING)
+            draw(x+2, y+1+i, "*"*(gui_width-3))
+        draw(x+(gui_width-1), y+1+i, "!", clr=CLR_HEADING)
+    draw(x, y+cnt, " "+"-"*(gui_width-2)+" ", clr=CLR_HEADING)
 
 
 def set_screen_dirty():
@@ -690,16 +623,16 @@ def set_screen_dirty():
 def do_draw_main(scr):
     global log_line_offset
     global longest_visible_line
-    global last_redraw
+    global last_full_redraw
     global auto_scroll
     global size_log_area
 
-    if time.time() - last_redraw > REDRAW_FREQUENCY:
+    if time.time() - last_full_redraw > FULL_REDRAW_FREQUENCY:
         # Do a full-screen redraw periodically to clear and
         # noise from non-curses text that get output to the
         # screen (e.g. modules that do a 'print')
         scr.clear()
-        last_redraw = time.time()
+        last_full_redraw = time.time()
     else:
         scr.erase()
 
@@ -732,8 +665,8 @@ def do_draw_main(scr):
                    str(start) + "-" + str(end) + " of " + str(cLogs),
                    CLR_HEADING)
     ver = " mycroft-core " + mycroft.version.CORE_VERSION_STR + " ==="
-    scr.addstr(1, 0, "=" * (curses.COLS - 1 - len(ver)), CLR_HEADING)
-    scr.addstr(1, curses.COLS - 1 - len(ver), ver, CLR_HEADING)
+    scr.addstr(1, 0, "=" * (curses.COLS-1-len(ver)), CLR_HEADING)
+    scr.addstr(1, curses.COLS-1-len(ver), ver, CLR_HEADING)
 
     y = 2
     for i in range(start, end):
@@ -790,10 +723,10 @@ def do_draw_main(scr):
     if len(log_files) > 0:
         scr.addstr(y_log_legend + 2, curses.COLS // 2 + 2,
                    os.path.basename(log_files[0]) + ", other",
-                   CLR_LOG2)
+                   CLR_LOG1)
     if len(log_files) > 1:
         scr.addstr(y_log_legend + 3, curses.COLS // 2 + 2,
-                   os.path.basename(log_files[1]), CLR_LOG1)
+                   os.path.basename(log_files[1]), CLR_LOG2)
 
     # Meter
     y_meter = y_log_legend
@@ -837,7 +770,7 @@ def do_draw_main(scr):
         y += 1
 
     if show_gui and curses.COLS > 20 and curses.LINES > 20:
-        _do_gui(curses.COLS - 20)
+        _do_gui(curses.COLS-20)
 
     # Command line at the bottom
     ln = line
@@ -849,7 +782,7 @@ def do_draw_main(scr):
     else:
         prompt = "Input (':' for command, Ctrl+C to quit)"
         if show_last_key:
-            prompt += " === keycode: " + last_key
+            prompt += " === keycode: "+last_key
         scr.addstr(curses.LINES - 2, 0,
                    make_titlebar(prompt,
                                  curses.COLS - 1),
@@ -870,59 +803,58 @@ def make_titlebar(title, bar_length):
 # Help system
 
 
-help_struct = [('Log Scrolling shortcuts',
-                [("Up / Down / PgUp / PgDn",
-                  "scroll thru history"),
-                 ("Ctrl+T / Ctrl+PgUp",
-                  "scroll to top of logs (jump to oldest)"),
-                 ("Ctrl+B / Ctrl+PgDn",
-                  "scroll to bottom of logs" + "(jump to newest)"),
-                 ("Left / Right",
-                  "scroll long lines left/right"),
-                 ("Home / End",
-                  "scroll to start/end of long lines")]),
-               ("Query History shortcuts",
-                [("Ctrl+N / Ctrl+Left",
-                  "previous query"),
-                 ("Ctrl+P / Ctrl+Right",
-                    "next query")]),
-               ("General Commands (type ':' to enter command mode)",
-                [(":quit or :exit",
-                  "exit the program"),
-                 (":meter (show|hide)",
-                    "display the microphone level"),
-                    (":keycode (show|hide)",
-                     "display typed key codes (mainly debugging)"),
-                    (":history (# lines)",
-                     "set size of visible history buffer"),
-                    (":clear",
-                     "flush the logs")]),
-               ("Log Manipulation Commands",
-                [(":filter 'STR'",
-                  "adds a log filter (optional quotes)"),
-                 (":filter remove 'STR'",
-                    "removes a log filter"),
-                    (":filter (clear|reset)",
-                     "reset filters"),
-                    (":filter (show|list)",
-                     "display current filters"),
-                    (":find 'STR'",
-                     "show logs containing 'str'"),
-                    (":log level (DEBUG|INFO|ERROR)",
-                     "set logging level"),
-                    (":log bus (on|off)",
-                     "control logging of messagebus messages")]),
-               ("Skill Debugging Commands",
-                [(":skills",
-                  "list installed Skills"),
-                 (":api SKILL",
-                    "show Skill's public API"),
-                    (":activate SKILL",
-                     "activate Skill, e.g. 'activate skill-wiki'"),
-                    (":deactivate SKILL",
-                     "deactivate Skill"),
-                    (":keep SKILL",
-                     "deactivate all Skills except the indicated Skill")])]
+help_struct = [
+    (
+     'Log Scrolling shortcuts',
+     [
+      ("Up / Down / PgUp / PgDn",   "scroll thru history"),
+      ("Ctrl+T / Ctrl+PgUp",        "scroll to top of logs (jump to oldest)"),
+      ("Ctrl+B / Ctrl+PgDn",        "scroll to bottom of logs" +
+                                    "(jump to newest)"),
+      ("Left / Right",              "scroll long lines left/right"),
+      ("Home / End",                "scroll to start/end of long lines")
+     ]
+    ),
+    (
+     "Query History shortcuts",
+     [
+      ("Ctrl+N / Ctrl+Right",       "previous query"),
+      ("Ctrl+P / Ctrl+Left",        "next query")
+     ]
+    ),
+    (
+     "General Commands (type ':' to enter command mode)",
+     [
+      (":quit or :exit",        "exit the program"),
+      (":meter (show|hide)",    "display the microphone level"),
+      (":keycode (show|hide)",  "display typed key codes (mainly debugging)"),
+      (":history (# lines)",    "set size of visible history buffer"),
+      (":clear",                "flush the logs")
+     ]
+    ),
+    (
+     "Log Manipulation Commands",
+     [
+      (":filter 'STR'",         "adds a log filter (optional quotes)"),
+      (":filter remove 'STR'",  "removes a log filter"),
+      (":filter (clear|reset)", "reset filters"),
+      (":filter (show|list)",   "display current filters"),
+      (":find 'STR'",           "show logs containing 'str'"),
+      (":log level (DEBUG|INFO|ERROR)", "set logging level"),
+      (":log bus (on|off)",     "control logging of messagebus messages")
+     ]
+    ),
+    (
+     "Skill Debugging Commands",
+     [
+      (":skills",               "list installed skills"),
+      (":activate SKILL",       "activate skill, e.g. 'activate skill-wiki'"),
+      (":deactivate SKILL",     "deactivate skill"),
+      (":keep SKILL",           "deactivate all skills except " +
+                                "the indicated skill")
+     ]
+    )
+]
 help_longest = 0
 for s in help_struct:
     for ent in s[1]:
@@ -977,7 +909,7 @@ def do_draw_help(scr):
             ln = line[0].ljust(help_longest + 1)
             for w in words:
                 if len(ln) + 1 + len(w) < curses.COLS:
-                    ln += " " + w
+                    ln += " "+w
                 else:
                     y = render_help(ln, y, i, first, last, CLR_CMDLINE)
                     ln = " ".ljust(help_longest + 2) + w
@@ -1021,7 +953,9 @@ def show_next_help():
 # Skill debugging
 
 def show_skills(skills):
-    """Show list of loaded Skills in as many column as necessary."""
+    """
+        Show list of loaded skills in as many column as necessary
+    """
     global scr
     global screen_mode
 
@@ -1038,7 +972,7 @@ def show_skills(skills):
         nonlocal row
         nonlocal column
         scr.erase()
-        scr.addstr(0, 0, center(25) + "Loaded Skills", CLR_CMDLINE)
+        scr.addstr(0, 0, center(25) + "Loaded skills", CLR_CMDLINE)
         scr.addstr(1, 1, "=" * (curses.COLS - 2), CLR_CMDLINE)
         row = 2
         column = 0
@@ -1071,62 +1005,6 @@ def show_skills(skills):
             if column > curses.COLS - 20:
                 # End of screen
                 break
-
-    scr.addstr(curses.LINES - 1, 0, center(23) + "Press any key to return",
-               CLR_HEADING)
-    scr.refresh()
-
-
-def show_skill_api(skill, data):
-    """Show available help on Skill's API."""
-    global scr
-    global screen_mode
-
-    if not scr:
-        return
-
-    screen_mode = SCR_SKILLS
-
-    row = 2
-    column = 0
-
-    def prepare_page():
-        global scr
-        nonlocal row
-        nonlocal column
-        scr.erase()
-        scr.addstr(0, 0, center(25) + "Skill-API for {}".format(skill),
-                   CLR_CMDLINE)
-        scr.addstr(1, 1, "=" * (curses.COLS - 2), CLR_CMDLINE)
-        row = 2
-        column = 4
-
-    prepare_page()
-    for key in data:
-        color = curses.color_pair(4)
-
-        scr.addstr(row, column, "{} ({})".format(key, data[key]['type']),
-                   CLR_HEADING)
-        row += 2
-        if 'help' in data[key]:
-            help_text = data[key]['help'].split('\n')
-            for line in help_text:
-                scr.addstr(row, column + 2, line, color)
-                row += 1
-            row += 2
-        else:
-            row += 1
-
-        if row == curses.LINES - 5:
-            scr.addstr(curses.LINES - 1, 0,
-                       center(23) + "Press any key to continue", CLR_HEADING)
-            scr.refresh()
-            wait_for_any_key()
-            prepare_page()
-        elif row == curses.LINES - 5:
-            # Reached bottom of screen, start at top and move output to a
-            # New column
-            row = 2
 
     scr.addstr(curses.LINES - 1, 0, center(23) + "Press any key to return",
                CLR_HEADING)
@@ -1280,17 +1158,6 @@ def handle_cmd(cmd):
                 bus.emit(Message("skillmanager.activate", data={'skill': s}))
         else:
             add_log_message('Usage :activate SKILL [SKILL2] [...]')
-    elif "api" in cmd:
-        parts = cmd.split()
-        if len(parts) < 2:
-            return
-        skill = parts[1]
-        message = bus.wait_for_response(Message('{}.public_api'.format(skill)))
-        if message:
-            show_skill_api(skill, message.data)
-            scr.get_wch()  # blocks
-            screen_mode = SCR_MAIN
-            set_screen_dirty()
 
     # TODO: More commands
     return 0  # do nothing upon return
@@ -1376,13 +1243,13 @@ def gui_main(stdscr):
                     start = time.time()
                     while c1 == -1:
                         c1 = scr.getch()
-                        if time.time() - start > 1:
+                        if time.time()-start > 1:
                             break  # 1 second timeout waiting for ESC code
 
                     c2 = -1
                     while c2 == -1:
                         c2 = scr.getch()
-                        if time.time() - start > 1:  # 1 second timeout
+                        if time.time()-start > 1:  # 1 second timeout
                             break  # 1 second timeout waiting for ESC code
 
                 if c1 == 79 and c2 == 120:

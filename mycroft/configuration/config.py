@@ -1,4 +1,3 @@
-
 # Copyright 2017 Mycroft AI Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,7 +18,6 @@ import os
 import re
 from os.path import exists, isfile, join, dirname
 
-import xdg.BaseDirectory
 from requests import RequestException
 
 from mycroft.util.combo_lock import ComboLock
@@ -28,12 +26,15 @@ from mycroft.util import camel_case_split
 from mycroft.util.json_helper import load_commented_json, merge_dict
 from mycroft.util.log import LOG
 
-from .locations import (
-    DEFAULT_CONFIG,
-    OLD_USER_CONFIG,
-    SYSTEM_CONFIG,
-    USER_CONFIG
-)
+# Chemins pour les deux systèmes d'exploitation
+CONFIG_DIR = os.path.join(os.path.expanduser('~'), '.mycroft', 'config')
+REMOTE_CACHE_DIR = os.path.join(CONFIG_DIR, 'backend', 'web_cache.json')
+
+SYSTEM_CONFIG = os.path.join(CONFIG_DIR, 'system', 'mycroft.conf')
+USER_CONFIG = os.path.join(CONFIG_DIR, 'user', 'mycroft.conf')
+
+# Chemin par défaut (peut être différent selon votre structure de répertoires)
+DEFAULT_CONFIG = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'configuration', 'mycroft.conf')
 
 
 def is_remote_list(values):
@@ -165,8 +166,7 @@ class RemoteConf(LocalConf):
     def __init__(self, cache=None):
         super(RemoteConf, self).__init__(None)
 
-        cache = cache or join(xdg.BaseDirectory.xdg_cache_home, 'mycroft',
-                              'web_cache.json')
+        cache = cache or join(CONFIG_DIR, 'cache', 'web_cache.json')
         from mycroft.api import is_paired
         if not is_paired():
             self.load_local(cache)
@@ -211,11 +211,11 @@ def _log_old_location_deprecation():
     LOG.warning("\n ===============================================\n"
                 " ==             DEPRECATION WARNING           ==\n"
                 " ===============================================\n"
-                f" You still have a config file at {OLD_USER_CONFIG}\n"
+                f" You still have a config file at {USER_CONFIG}\n"
                 " Note that this location is deprecated and will"
                 " not be used in the future\n"
                 " Please move it to "
-                f"{join(xdg.BaseDirectory.xdg_config_home, 'mycroft')}")
+                f"{join(CONFIG_DIR, 'user')}")
 
 
 class Configuration:
@@ -264,13 +264,13 @@ class Configuration:
             # Then use XDG config
             # This includes both the user config and
             # /etc/xdg/mycroft/mycroft.conf
-            for conf_dir in xdg.BaseDirectory.load_config_paths('mycroft'):
+            for conf_dir in CONFIG_DIR:
                 configs.append(LocalConf(join(conf_dir, 'mycroft.conf')))
 
             # Then check the old user config
-            if isfile(OLD_USER_CONFIG):
+            if isfile(USER_CONFIG):
                 _log_old_location_deprecation()
-                configs.append(LocalConf(OLD_USER_CONFIG))
+                configs.append(LocalConf(USER_CONFIG))
 
             # Then use the system config (/etc/mycroft/mycroft.conf)
             configs.append(LocalConf(SYSTEM_CONFIG))

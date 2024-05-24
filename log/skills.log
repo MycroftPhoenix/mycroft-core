@@ -1,0 +1,50 @@
+2024-05-23 21:18:20.229 | WARNING  | 685528 | mycroft.configuration.config:_log_old_location_deprecation:211 | 
+ ===============================================
+ ==             DEPRECATION WARNING           ==
+ ===============================================
+ You still have a config file at /home/steve/.mycroft/config/user/mycroft.conf
+ Note that this location is deprecated and will not be used in the future
+ Please move it to /home/steve/.mycroft/config/user
+2024-05-23 21:18:22,848 | WARNING  | 685528 | mycroft.configuration.config:_log_old_location_deprecation:211 | 
+ ===============================================
+ ==             DEPRECATION WARNING           ==
+ ===============================================
+ You still have a config file at /home/steve/.mycroft/config/user/mycroft.conf
+ Note that this location is deprecated and will not be used in the future
+ Please move it to /home/steve/.mycroft/config/user
+2024-05-23 21:18:24,183 | WARNING  | 685528 | mycroft.configuration.config:_log_old_location_deprecation:211 | 
+ ===============================================
+ ==             DEPRECATION WARNING           ==
+ ===============================================
+ You still have a config file at /home/steve/.mycroft/config/user/mycroft.conf
+ Note that this location is deprecated and will not be used in the future
+ Please move it to /home/steve/.mycroft/config/user
+2024-05-23 21:18:24,849 | INFO     | 685528 | mycroft.messagebus.load_config:load_message_bus_config:33 | Loading message bus configs
+2024-05-23 21:18:24,935 | INFO     | 685528 | mycroft_bus_client.client.client | Connected
+2024-05-23 21:18:25,002 | INFO     | 685528 | mycroft.util.process_utils:start_message_bus_client:155 | Connected to messagebus
+2024-05-23 21:18:25,053 | INFO     | 685528 | mycroft.skills.settings:__init__:368 | Skill settings sync is disabled, backend settings will not be downloaded
+2024-05-23 21:18:25,105 | INFO     | 685528 | mycroft.skills.msm_wrapper:create_msm:96 | Acquiring lock to instantiate MSM
+Traceback (most recent call last):
+  File "/home/steve/miniforge3/envs/multiplatforme/lib/python3.8/runpy.py", line 194, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/home/steve/miniforge3/envs/multiplatforme/lib/python3.8/runpy.py", line 87, in _run_code
+    exec(code, run_globals)
+  File "/home/steve/mycroft-core/mycroft/skills/__main__.py", line 295, in <module>
+    main()
+  File "/home/steve/mycroft-core/mycroft/skills/__main__.py", line 217, in main
+    skill_manager = _initialize_skill_manager(bus, watchdog)
+  File "/home/steve/mycroft-core/mycroft/skills/__main__.py", line 263, in _initialize_skill_manager
+    skill_manager = SkillManager(bus, watchdog)
+  File "/home/steve/mycroft-core/mycroft/skills/skill_manager.py", line 143, in __init__
+    self.skill_updater = SkillUpdater()
+  File "/home/steve/mycroft-core/mycroft/skills/skill_updater.py", line 58, in __init__
+    self.dot_msm_path = os.path.join(self.msm.skills_dir, '.msm')
+  File "/home/steve/mycroft-core/mycroft/skills/skill_updater.py", line 111, in msm
+    self._msm = create_msm(msm_config)
+  File "/home/steve/mycroft-core/mycroft/skills/msm_wrapper.py", line 99, in create_msm
+    makedirs(msm_config.skills_dir)
+  File "/home/steve/miniforge3/envs/multiplatforme/lib/python3.8/os.py", line 213, in makedirs
+    makedirs(head, exist_ok=exist_ok)
+  File "/home/steve/miniforge3/envs/multiplatforme/lib/python3.8/os.py", line 223, in makedirs
+    mkdir(name, mode)
+PermissionError: [Errno 13] Permission denied: '/opt/mycroft'
